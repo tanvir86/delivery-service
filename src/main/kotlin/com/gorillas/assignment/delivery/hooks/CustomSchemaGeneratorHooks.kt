@@ -65,21 +65,23 @@ private object DateTimeCoercing : Coercing<OffsetDateTime, String> {
     }.getOrElse {
         throw CoercingParseLiteralException("Expected valid RFC3339 DateTime but was $input")
     }
+
     override fun serialize(dataFetcherResult: Any): String = kotlin.runCatching {
         dataFetcherResult.toString()
     }.getOrElse {
         throw CoercingSerializeException("Data fetcher result $dataFetcherResult cannot be serialized to a String")
     }
+
     override fun parseLiteral(input: Any): OffsetDateTime = runCatching {
         parseOffsetDateTime((input as? StringValue)?.value)
     }.getOrElse {
         throw CoercingParseLiteralException("Expected valid Period literal but was $input")
     }
 
-    private fun parseOffsetDateTime(str: String?) : OffsetDateTime  {
-        try{
+    private fun parseOffsetDateTime(str: String?): OffsetDateTime {
+        try {
             return OffsetDateTime.parse(str, DateTimeFormatter.ISO_OFFSET_DATE_TIME)
-        } catch (err: DateTimeParseException){
+        } catch (err: DateTimeParseException) {
             throw CoercingParseLiteralException("Expected valid RFC3339 DateTime but was $str")
         }
     }
@@ -101,13 +103,16 @@ private object UIntCoercing : Coercing<UInt, Int> {
     }.getOrElse {
         throw CoercingParseLiteralException("Expected valid Unsigned Integer but was $input")
     }
+
     override fun serialize(dataFetcherResult: Any): Int = kotlin.runCatching {
-        (dataFetcherResult as? UInt)?.toInt() ?: throw CoercingSerializeException("Data fetcher result $dataFetcherResult cannot be serialized to a UInt")
+        (dataFetcherResult as? UInt)?.toInt()
+            ?: throw CoercingSerializeException("Data fetcher result $dataFetcherResult cannot be serialized to a UInt")
     }.getOrElse {
         throw CoercingSerializeException("Data fetcher result $dataFetcherResult cannot be serialized to a UInt")
     }
+
     override fun parseLiteral(input: Any): UInt = runCatching {
-        (input as? UInt)?:  throw CoercingParseLiteralException("Expected valid Unsigned Integer but was $input")
+        (input as? UInt) ?: throw CoercingParseLiteralException("Expected valid Unsigned Integer but was $input")
     }.getOrElse {
         throw CoercingParseLiteralException("Expected valid Unsigned Integer but was $input")
     }
