@@ -58,6 +58,13 @@
 			<artifactId>graphql-kotlin-spring-server</artifactId>
 			<version>5.3.2</version>
 		</dependency>
+		<dependency>
+			<groupId>com.expediagroup</groupId>
+			<artifactId>graphql-kotlin-hooks-provider</artifactId>
+			<version>5.3.2</version>
+<!--			<scope>runtime</scope>-->
+		</dependency>
+
 	</dependencies>
 
 	<build>
